@@ -1,0 +1,602 @@
+/* 這個檔管「長相」:顏色、字體、間距。改色就是改這裡。 */
+
+:root {
+  --bg: #f4f6f8;
+  --ink: #111827;
+  --muted: #66708599;
+  --muted-solid: #667085;
+  --accent: #f97316;
+  --sea: #2dd4bf;
+  --sea-deep: #0f766e;
+  --sand: #f8fafc;
+  --card: #ffffff;
+  --line: #d9e2ea;
+  --dark: #0a0f18;
+  --steel: #1f2937;
+  --good: #16a34a;
+  --warn: #d97706;
+  --danger: #dc2626;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', system-ui, sans-serif;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.eyebrow {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(255, 255, 255, 0.82);
+  padding: 6px 14px;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px -12px rgba(20, 48, 58, 0.5);
+}
+
+/* ── 下方教學區塊(置中容器)──────────────────── */
+
+main {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+  display: grid;
+  gap: 28px;
+  padding-bottom: 56px;
+}
+
+h2 { font-size: 30px; line-height: 1.25; margin-top: 8px; }
+
+/* ── GYOZA WOOD 首頁與 C2/C3 頁面 ───────────────── */
+
+.site-page { background: var(--bg); }
+
+.site-hero {
+  position: relative;
+  min-height: min(84vh, 760px);
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  color: #fff;
+}
+
+.site-hero-aurora {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(10, 15, 24, 0.9) 0%, rgba(10, 15, 24, 0.62) 44%, rgba(10, 15, 24, 0.16) 100%),
+    linear-gradient(180deg, rgba(10, 15, 24, 0.08) 0%, rgba(10, 15, 24, 0.72) 100%);
+  pointer-events: none;
+}
+
+.site-hero-inner {
+  position: relative;
+  z-index: 2;
+  width: min(1120px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 72px 0 104px;
+}
+
+/* ── 首頁主圖(SVG 插畫,或 data.js 的 heroImage 換成的照片)─────
+   放在 .hero-overlay 之後,所以畫在遮罩「之上」;但 z-index 比
+   .site-hero-inner(2) 低,文字永遠壓在圖上面,不會被蓋住。
+   遮罩本身是左深右淺,右半邊本來就留白 —— 圖放右邊剛好補上。 */
+
+.hero-art {
+  position: absolute;
+  z-index: 1;
+  right: -2%;
+  /* 抬高到 hero-metrics(bottom:28px,約 110px 高)之上,鍋子前緣才不會被切掉 */
+  bottom: 152px;
+  width: min(50%, 600px);
+  height: auto;
+  max-height: 62%;
+  object-fit: contain;
+  object-position: right bottom;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 蒸氣:三道錯開時間的上升淡出 */
+
+.hero-steam path {
+  animation: steam-rise 4.5s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+.hero-steam .s2 { animation-delay: 1.5s; }
+
+.hero-steam .s3 { animation-delay: 3s; }
+
+@keyframes steam-rise {
+  0%   { opacity: 0; transform: translateY(10px) scaleY(0.9); }
+  35%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-26px) scaleY(1.15); }
+}
+
+.eyebrow.solid {
+  display: inline-flex;
+  border-radius: 6px;
+  background: #e8fbf7;
+  color: #0f766e;
+  box-shadow: none;
+}
+
+.brand-kicker {
+  margin-top: 22px;
+  color: #93f6e9;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+}
+
+.site-hero h1 {
+  margin-top: 12px;
+  max-width: 880px;
+  font-size: clamp(46px, 8vw, 108px);
+  line-height: 0.92;
+  font-weight: 900;
+}
+
+.hero-copy {
+  margin-top: 22px;
+  max-width: 640px;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 21px;
+  line-height: 1.65;
+  font-weight: 650;
+}
+
+.primary-link {
+  display: inline-flex;
+  margin-top: 30px;
+  padding: 14px 22px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 900;
+  box-shadow: 0 18px 38px -24px rgba(249, 115, 22, 0.95);
+}
+
+.hero-metrics {
+  position: absolute;
+  z-index: 2;
+  right: max(24px, calc((100% - 1120px) / 2));
+  bottom: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(120px, 1fr));
+  width: min(520px, calc(100% - 48px));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(10, 15, 24, 0.72);
+  backdrop-filter: blur(10px);
+}
+
+.hero-metrics div {
+  padding: 18px;
+  border-right: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.hero-metrics div:last-child { border-right: 0; }
+
+.hero-metrics strong {
+  display: block;
+  font-size: 26px;
+}
+
+.hero-metrics span {
+  display: block;
+  margin-top: 5px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.site-main {
+  width: min(1120px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 42px 0 72px;
+  display: grid;
+  gap: 24px;
+}
+
+.mission-band {
+  padding: 28px 0 4px;
+  border-bottom: 1px solid var(--line);
+}
+
+.mission-band p {
+  max-width: 900px;
+  font-size: 21px;
+  line-height: 1.75;
+  color: #344054;
+  font-weight: 650;
+}
+
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.module-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.module-card {
+  min-height: 260px;
+  padding: 22px;
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
+/* 課程卡頂端:左邊 C1-C4 徽章,右邊製作階段圖示 */
+
+.module-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.module-icon {
+  width: 46px;
+  height: 46px;
+  flex: none;
+  opacity: 0.9;
+}
+
+.module-code {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 34px;
+  border-radius: 6px;
+  background: #101828;
+  color: #fff;
+  font-weight: 900;
+}
+
+.module-card h3 {
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.module-card p {
+  color: var(--muted-solid);
+  line-height: 1.65;
+}
+
+.module-card strong {
+  align-self: end;
+  color: #0f766e;
+  line-height: 1.45;
+}
+
+.flow-band {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 28px;
+  padding: 30px;
+  background: #101828;
+  color: #fff;
+  border-radius: 8px;
+}
+
+.flow-band h2 { margin: 10px 0 0; font-size: 30px; }
+
+.flow-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-content: center;
+}
+
+.flow-steps span {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: #d0f7f2;
+  font-size: 14px;
+  font-weight: 850;
+}
+
+.insight-section {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 16px;
+}
+
+.side-tabs {
+  display: grid;
+  gap: 8px;
+}
+
+.side-tabs button {
+  min-height: 52px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  text-align: left;
+  padding: 0 16px;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.side-tabs button.active {
+  background: #0f766e;
+  border-color: #0f766e;
+  color: #fff;
+}
+
+.insight-panel {
+  min-height: 270px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 32px;
+  display: grid;
+  align-content: center;
+}
+
+.insight-panel span {
+  color: #0f766e;
+  font-weight: 900;
+}
+
+.insight-panel h2 {
+  margin-top: 10px;
+  font-size: 34px;
+}
+
+.insight-panel p {
+  margin-top: 16px;
+  color: #475467;
+  font-size: 18px;
+  line-height: 1.75;
+}
+
+.acceptance-band {
+  padding: 30px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.acceptance-band h2 {
+  max-width: 720px;
+}
+
+.acceptance-band ul {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  list-style: none;
+}
+
+.acceptance-band li {
+  min-height: 96px;
+  padding: 16px;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  color: #344054;
+  line-height: 1.55;
+  font-weight: 750;
+}
+
+@media (max-width: 960px) {
+  .module-grid, .acceptance-band ul { grid-template-columns: 1fr 1fr; }
+  .flow-band, .insight-section { grid-template-columns: 1fr; }
+  .hero-metrics { position: relative; right: auto; bottom: auto; width: calc(100% - 40px); margin: -96px auto 28px; }
+  .hero-art {
+    top: 0;
+    bottom: auto;
+    right: -14%;
+    width: min(56%, 330px);
+    max-height: none;
+    opacity: 0.3;
+  }
+}
+
+@media (max-width: 620px) {
+  .site-hero { min-height: 720px; }
+  .site-hero-inner { padding-top: 56px; }
+  .hero-copy { font-size: 18px; }
+  .hero-metrics, .module-grid, .acceptance-band ul { grid-template-columns: 1fr; }
+  .site-main { width: min(100% - 28px, 1120px); }
+  .module-card { min-height: auto; }
+}
+
+/* ── 營運異常 Dashboard ──────────────────────────
+   U3 主線畫面。只在這個區塊內追加樣式,不改上面的規則。 */
+
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+  overflow-x: auto;
+}
+
+.topnav button {
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 20px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.topnav button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+@media (max-width: 560px) {
+  .topnav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 10px 12px;
+    overflow-x: visible;
+  }
+  .topnav button {
+    width: 100%;
+    justify-content: center;
+    padding: 9px 10px;
+    font-size: 14px;
+  }
+}
+
+/* GradientText：跑動的漸層文字 */
+
+.gradient-text {
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-flow linear infinite;
+}
+
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Aurora：柔光背景，取代原本的 three.js 場景 */
+
+.aurora-bg {
+  overflow: hidden;
+  background: var(--dark);
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+}
+
+.aurora-blob.b1 {
+  width: 46vw; height: 46vw; max-width: 640px; max-height: 640px;
+  left: -10%; top: -18%;
+  background: radial-gradient(circle, #2dd4bf, transparent 70%);
+  animation: aurora-drift-1 16s ease-in-out infinite;
+}
+
+.aurora-blob.b2 {
+  width: 38vw; height: 38vw; max-width: 520px; max-height: 520px;
+  right: -8%; top: 6%;
+  background: radial-gradient(circle, #f97316, transparent 70%);
+  animation: aurora-drift-2 20s ease-in-out infinite;
+}
+
+.aurora-blob.b3 {
+  width: 42vw; height: 42vw; max-width: 560px; max-height: 560px;
+  left: 22%; bottom: -22%;
+  background: radial-gradient(circle, #facc15, transparent 70%);
+  animation: aurora-drift-3 24s ease-in-out infinite;
+}
+
+@keyframes aurora-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(6%, 8%) scale(1.12); }
+}
+
+@keyframes aurora-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-8%, 6%) scale(1.08); }
+}
+
+@keyframes aurora-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(4%, -6%) scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-blob { animation: none !important; }
+  .gradient-text { animation: none !important; }
+  .hero-steam path { animation: none !important; }
+}
+
+/* SpotlightCard：滑鼠移動時跟隨的光暈 */
+
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(220px circle at var(--spot-x, 50%) var(--spot-y, 50%), var(--spot-color, rgba(45,212,191,0.25)), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.spotlight-card:hover::before { opacity: 1; }
+
+.spotlight-card > * { position: relative; z-index: 1; }
+
+/* TiltedCard：滑鼠移動時 3D 傾斜 */
+
+.tilted-card {
+  transition: transform 0.15s ease-out;
+  will-change: transform;
+}
+
+/* GlareHover：對角掃光 */
+
+.glare-hover {
+  position: relative;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.glare-sweep {
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.5), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.glare-hover:hover .glare-sweep { left: 130%; }

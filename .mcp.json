@@ -1,0 +1,9 @@
+{
+  "//": "專案層 MCP 設定。用 Claude Code 打開這個資料夾時會問你是否啟用；啟用後輸入 /mcp 應該看到 chrome-devtools。它讓 AI 能自己打開 http://localhost:5180、操作遊戲、讀 console、截圖。",
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["chrome-devtools-mcp@latest"]
+    }
+  }
+}

@@ -11,11 +11,17 @@ import { INVENTORY } from '../config.js';
 //   missed   賣完之後，還有幾位客人想買卻買不到
 // 回傳：'ok'（正常）| 'out'（缺貨）| 'over'（報廢過多）
 export function checkDish({ stocked, sold, waste, missed }) {
+  if (missed > 0) {
+    return 'out';
+  }
+  if (waste >= INVENTORY.wasteAlert) {
+    return 'over';
+  }
   return 'ok';
 }
 
 // 輸入：今天賣出幾份、賣完後沒買到的人數
 // 回傳：明天建議備幾份
 export function suggestQty({ sold, missed }) {
-  return 0;
+  return sold + missed;
 }
